@@ -1,0 +1,30 @@
+%!
+% Rayos en dos colores
+
+/mm {72 mul 25.4 div} def   % Conversion de mm a puntos
+/W {210 mm} def             % Ancho A4
+/H {297 mm} def             % Alto A4
+
+<< /PageSize [W H] >> setpagedevice 
+
+/linea {
+    moveto 
+    70 mm 0 rlineto 
+    stroke
+} def                       % Trazar linea de 70 mm hacia la derecha
+
+/N {20} def                 % Numero de lineas
+W 2 div H 2 div translate   % Origen de coordenadas al centro de la p‡gina
+
+2 setlinewidth              % Espesor de las lineas: 2 pt
+1 1 N {                     % Repetir de 1 a N
+    360 N div rotate        % Rotar espacio en (360/N) grados
+    2 mod 0 eq 
+        {0 1 1}             % Cyan en lineas pares
+        {0 0 1}             % Azul en lineas impares
+    ifelse
+    setrgbcolor
+    0 0 linea               % Trazar linea
+} for
+
+showpage
